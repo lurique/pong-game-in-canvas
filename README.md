@@ -5,4 +5,6 @@
 
 A simple Pong game made with Canvas and JS.
 
-![https://atomicodes-pong-game.herokuapp.com/](https://goo.gl/xa7Ezs)
+<a href="https://atomicodes-pong-game.herokuapp.com/">
+  <img src="https://goo.gl/xa7Ezs" />
+</a>
