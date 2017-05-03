@@ -8,7 +8,7 @@
 	<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-	<h1>Pong Game</h1>
+	<h1>Pong Game 2</h1>
 
 	<canvas id="canvas" width="840" height="450"></canvas>
 
