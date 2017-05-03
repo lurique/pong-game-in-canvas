@@ -6,8 +6,7 @@ var App = App || {};
 
 		init: function() {
 			this.defineVariables();
-			this.defineModules();
-			this.defineEvents();
+			this.buildGame();
 		},
 
 		defineVariables: function() {
@@ -41,11 +40,15 @@ var App = App || {};
 			this.ballSpeedY = this.ballSpeedX / 2;
 		},
 
-		defineModules: function() {
+		buildGame: function() {
 			window.onload = function() {
 				var self = App.Pong;
 
-				self.Modules.drawArena();
+				self.Events.versusHuman();
+
+				setInterval(function (){
+					self.Modules.drawArena();
+				}, 1000 / self.FRAMES);
 			}
 		},
 
@@ -101,10 +104,6 @@ var App = App || {};
 			}
 		},
 
-		defineEvents: function() {
-			this.Events.versusHuman();
-		},
-
 		Events: {
 			versusCPU: function() {
 				var self = App.Pong;
@@ -113,11 +112,11 @@ var App = App || {};
 				window.addEventListener('keydown', function(key) {
 					switch(key.keyCode) {
 						case 87:
-							self.player1Y += 5;
+							self.player1Y += 10;
 							break;
 
 						case 83:
-							self.player1Y -= 5;
+							self.player1Y -= 10;
 							break;
 					}
 				});
@@ -135,31 +134,7 @@ var App = App || {};
 			versusHuman: function() {
 				var self = App.Pong;
 
-				window.addEventListener('keydown', function(key) {
-					switch(key.keyCode) {
-
-						// Player 1
-						case 87:
-							self.player1Y += 5;
-							break;
-
-						case 83:
-							self.player1Y -= 5;
-							break;
-
-						// Player 2
-						case 38:
-							self.paddle2Y += 5;
-							break;
-
-						case 40:
-							self.paddle2Y -= 5;
-							break;
-
-						default:
-							break;
-					}
-				});
+				// In the future - Without keypress ghosting
 			},
 
 			moveElements: function() {
