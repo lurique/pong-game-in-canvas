@@ -44,16 +44,31 @@ var App = App || {};
 			window.onload = function() {
 				var self = App.Pong;
 
-				self.Events.versusHuman();
+				//self.Events.versusHuman();
+
+				window.addEventListener('keydown', function(key) {
+					switch(key.keyCode) {
+						case 87:
+							self.player2Y += 10;
+							break;
+
+						case 83:
+							self.player2Y -= 10;
+							break;
+					}
+				});
 
 				setInterval(function (){
 					self.Modules.drawArena();
+					self.Events.moveBall();
 				}, 1000 / self.FRAMES);
 			}
 		},
 
 		Modules: {
 			drawGamemode: function() {
+				var self = App.Pong;
+
 
 			},
 
@@ -75,11 +90,11 @@ var App = App || {};
 				this.colorRect(self.canvas.width - self.PADDLE_WIDTH, self.player2Y, self.PADDLE_WIDTH, self.PADDLE_HEIGHT, 'white');
 
 				// Draw ball
-				this.colorRect(self.canvas.width / 2 - 3.5, self.canvas.height / 2 - 3.5, 8, 8, 'white');
+				this.colorRect(self.ballX, self.ballY, 8, 8, 'white');
 
 				// Draw number of goals
-				this.textRect(0, self.canvas.width / 2 - 50, 30, 'white');
-				this.textRect(0, self.canvas.width / 2 + 50, 30, 'white');
+				this.textRect(self.player1Score, self.canvas.width / 2 - 50, 30, 'white');
+				this.textRect(self.player2Score, self.canvas.width / 2 + 50, 30, 'white');
 			},
 
 			colorRect: function(left, top, width, height, color) {
@@ -137,8 +152,47 @@ var App = App || {};
 				// In the future - Without keypress ghosting
 			},
 
-			moveElements: function() {
+			moveBall: function() {
+				var self = App.Pong;
 
+				self.ballX = self.ballX + self.ballSpeedX;
+				self.ballY = self.ballY + self.ballSpeedY;
+
+				if ( self.ballX < 0 ) {
+					if ( self.ballY > self.paddle1Y && self.ballY < self.paddle1Y + self.PADDLE_HEIGHT ) {
+						self.ballSpeedX = -self.ballSpeedX;
+
+						var deltaY = self.ballY -(self.paddle1Y + self.PADDLE_HEIGHT / 2);
+
+						self.ballSpeedY = deltaY * 0.35;
+					} else {
+						player2Score++;
+
+						self.Events.resetBall();
+					}
+				}
+
+				if ( self.ballX > self.canvas.width ) {
+					if ( self.ballY > self.paddle2Y && self.ballY < self.paddle2Y + self.PADDLE_HEIGHT ) {
+						self.ballSpeedX = -self.ballSpeedX;
+
+						var deltaY = self.ballY -(self.paddle2Y + self.PADDLE_HEIGHT / 2);
+
+						self.ballSpeedY = deltaY * 0.35;
+					} else {
+						self.player1Score++;
+
+						self.Events.resetBall();
+					}
+				}
+
+				if ( self.ballY < 0 ) {
+					self.ballSpeedY = -self.ballSpeedY;
+				}
+
+				if ( self.ballY > self.canvas.height ) {
+					self.ballSpeedY = -self.ballSpeedY;
+				}
 			},
 
 			resetBall: function() {
