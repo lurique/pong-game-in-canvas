@@ -12,13 +12,17 @@ var App = App || {};
 
 		defineVariables: function() {
 			// Constants
-			this.FRAMES = 30;
 			this.WIN_SCORE = 5;
 			this.VICTORY = false;
-			this.VERSUS = false;
+			
 			this.PADDLE_HEIGHT = 80;
 			this.PADDLE_WIDTH = 8;
+
+			this.VERSUS = false;
+			this.START = false;
 			
+			this.FRAMES = 30;
+
 			// Variables
 			this.canvas = document.getElementById('canvas');
 			this.ctx = this.canvas.getContext('2d');
@@ -46,6 +50,10 @@ var App = App || {};
 		},
 
 		Modules: {
+			drawGamemode: function() {
+
+			},
+
 			drawArena: function() {
 				var self = App.Pong;
 
@@ -94,7 +102,7 @@ var App = App || {};
 		},
 
 		defineEvents: function() {
-
+			this.Events.versusHuman();
 		},
 
 		Events: {
@@ -147,8 +155,15 @@ var App = App || {};
 						case 40:
 							self.paddle2Y -= 5;
 							break;
+
+						default:
+							break;
 					}
 				});
+			},
+
+			moveElements: function() {
+
 			},
 
 			resetBall: function() {
