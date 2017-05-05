@@ -17,6 +17,7 @@ var App = App || {};
 			this.PADDLE_HEIGHT = 80;
 			this.PADDLE_WIDTH = 8;
 
+			this.GAMEMODE = false;
 			this.VERSUS = false;
 			this.START = false;
 			
@@ -36,8 +37,8 @@ var App = App || {};
 
 			this.ballX = 50;
 			this.ballY = this.ballX;
-			this.ballSpeedX = 7;
-			this.ballSpeedY = this.ballSpeedX / 2;
+			// this.ballSpeedX = 7;
+			// this.ballSpeedY = this.ballSpeedX / 2;
 		},
 
 		buildGame: function() {
@@ -56,11 +57,22 @@ var App = App || {};
 					}
 				});
 
-				setInterval(function (){
-					self.Modules.drawArena();
-					self.Events.moveBall();
-					self.Events.versusCPU();
-				}, 1000 / self.FRAMES);
+				self.Modules.drawGamemode();
+
+				if ( self.GAMEMODE == true ) {
+					setInterval(function (){
+						self.Modules.drawArena();
+						self.Events.moveBall();
+
+						if ( self.VERSUS == false ) {
+							self.Events.versusCPU();
+						} else {
+							self.Events.versusHuman();
+						}
+
+					}, 1000 / self.FRAMES);
+				}
+
 			}
 		},
 
@@ -68,7 +80,21 @@ var App = App || {};
 			drawGamemode: function() {
 				var self = App.Pong;
 
-				
+				// Draw background
+				this.colorRect(0, 0, self.canvas.width, self.canvas.height, 'black');
+
+				// Draw separator
+				this.colorRect(self.canvas.width / 2, 55, 1, self.canvas.height, 'white');
+
+				// Draw buttons
+				this.strokeRect((self.canvas.width / 3) - 150, (self.canvas.height / 2) - 20, 150, 40, 'white');
+				this.strokeRect((self.canvas.width / 2) + 150, (self.canvas.height / 2) - 20, 150, 40, 'white');
+
+				this.textRect('versus Human', self.canvas.width / 4 - 40, self.canvas.height / 2 + 3, 'white');
+				this.textRect('versus CPU', self.canvas.width / 2 + 196, self.canvas.height / 2 + 3, 'white');
+
+				// Draw title
+				this.textRect('Choose your game', self.canvas.width / 2 - 40, 30, 'white');
 			},
 
 			drawArena: function() {
