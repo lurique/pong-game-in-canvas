@@ -36,7 +36,7 @@ var App = App || {};
 
 			this.ballX = 50;
 			this.ballY = this.ballX;
-			this.ballSpeedX = 10;
+			this.ballSpeedX = 7;
 			this.ballSpeedY = this.ballSpeedX / 2;
 		},
 
@@ -44,11 +44,22 @@ var App = App || {};
 			window.onload = function() {
 				var self = App.Pong;
 
-				self.Events.versusCPU();
+				window.addEventListener('keydown', function(key) {
+					switch(key.keyCode) {
+						case 87:
+							self.player1Y += 35;
+							break;
+
+						case 83:
+							self.player1Y -= 35;
+							break;
+					}
+				});
 
 				setInterval(function (){
 					self.Modules.drawArena();
 					self.Events.moveBall();
+					self.Events.versusCPU();
 				}, 1000 / self.FRAMES);
 			}
 		},
@@ -111,26 +122,13 @@ var App = App || {};
 			versusCPU: function() {
 				var self = App.Pong;
 
-				// Player 1
-				window.addEventListener('keydown', function(key) {
-					switch(key.keyCode) {
-						case 87:
-							self.player1Y += 10;
-							break;
-
-						case 83:
-							self.player1Y -= 10;
-							break;
-					}
-				});
-
 				// CPU
-				var paddleCenter = self.paddle2Y + (self.PADDLE_HEIGHT / 2);
+				self.player2Y = self.player2Y;
 
-				if ( paddleCenter < self.ballY - 35 ) {
-					paddle2Y = paddle2Y + 6;
-				} else if ( paddleCenter > self.ballY + 35 ) {
-					paddle2Y = paddle2Y - 6;
+				if ( self.player2Y < self.ballY - 35 ) {
+					self.player2Y += 5;
+				} else if ( self.player2Y > self.ballY - 35 ) {
+					self.player2Y -= 5;
 				}
 			},
 
@@ -158,14 +156,6 @@ var App = App || {};
 
 					this.resetBall();
 
-				}
-
-				if ( self.ballY < 0 ) {
-					self.ballSpeedY = -self.ballSpeedY;
-				}
-
-				if ( self.ballY > self.canvas.height ) {
-					self.ballSpeedY = -self.ballSpeedY;
 				}
 			},
 
