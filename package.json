@@ -1,0 +1,24 @@
+{
+  "name": "pong-game-in-canvas",
+  "version": "1.0.0",
+  "description": "Simple pong game in canvas made by Lucas Henrique",
+  "main": "webpack.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lurique/pong-game-in-canvas.git"
+  },
+  "keywords": [
+    "pong",
+    "pong",
+    "game"
+  ],
+  "author": "Lucas Henrique",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lurique/pong-game-in-canvas/issues"
+  },
+  "homepage": "https://github.com/lurique/pong-game-in-canvas#readme"
+}
