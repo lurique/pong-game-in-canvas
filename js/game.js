@@ -125,10 +125,12 @@ var App = App || {};
 				// CPU
 				self.player2Y = self.player2Y;
 
-				if ( self.player2Y < self.ballY - 35 ) {
-					self.player2Y += 5;
-				} else if ( self.player2Y > self.ballY - 35 ) {
-					self.player2Y -= 5;
+				if ( self.ballX > self.canvas.width / 2 ) {
+					if ( self.player2Y < self.ballY - 35 ) {
+						self.player2Y += 5;
+					} else if ( self.player2Y > self.ballY - 35 ) {
+						self.player2Y -= 5;
+					}
 				}
 			},
 
