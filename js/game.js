@@ -44,19 +44,7 @@ var App = App || {};
 			window.onload = function() {
 				var self = App.Pong;
 
-				//self.Events.versusHuman();
-
-				window.addEventListener('keydown', function(key) {
-					switch(key.keyCode) {
-						case 87:
-							self.player2Y += 10;
-							break;
-
-						case 83:
-							self.player2Y -= 10;
-							break;
-					}
-				});
+				self.Events.versusCPU();
 
 				setInterval(function (){
 					self.Modules.drawArena();
@@ -69,7 +57,7 @@ var App = App || {};
 			drawGamemode: function() {
 				var self = App.Pong;
 
-
+				
 			},
 
 			drawArena: function() {
@@ -141,7 +129,7 @@ var App = App || {};
 
 				if ( paddleCenter < self.ballY - 35 ) {
 					paddle2Y = paddle2Y + 6;
-				} else if ( paddleCenter > ballY + 35 ) {
+				} else if ( paddleCenter > self.ballY + 35 ) {
 					paddle2Y = paddle2Y - 6;
 				}
 			},
@@ -158,32 +146,18 @@ var App = App || {};
 				self.ballX = self.ballX + self.ballSpeedX;
 				self.ballY = self.ballY + self.ballSpeedY;
 
-				if ( self.ballX < 0 ) {
-					if ( self.ballY > self.paddle1Y && self.ballY < self.paddle1Y + self.PADDLE_HEIGHT ) {
-						self.ballSpeedX = -self.ballSpeedX;
+				if ( self.ballX > self.canvas.width ) {
+					self.player1Score++;
 
-						var deltaY = self.ballY -(self.paddle1Y + self.PADDLE_HEIGHT / 2);
-
-						self.ballSpeedY = deltaY * 0.35;
-					} else {
-						player2Score++;
-
-						self.Events.resetBall();
-					}
+					this.resetBall();
 				}
 
-				if ( self.ballX > self.canvas.width ) {
-					if ( self.ballY > self.paddle2Y && self.ballY < self.paddle2Y + self.PADDLE_HEIGHT ) {
-						self.ballSpeedX = -self.ballSpeedX;
+				if ( self.ballX < 0 ) {
 
-						var deltaY = self.ballY -(self.paddle2Y + self.PADDLE_HEIGHT / 2);
+					self.player2Score++;
 
-						self.ballSpeedY = deltaY * 0.35;
-					} else {
-						self.player1Score++;
+					this.resetBall();
 
-						self.Events.resetBall();
-					}
 				}
 
 				if ( self.ballY < 0 ) {
