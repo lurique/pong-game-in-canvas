@@ -37,8 +37,8 @@ var App = App || {};
 
 			this.ballX = 50;
 			this.ballY = this.ballX;
-			// this.ballSpeedX = 7;
-			// this.ballSpeedY = this.ballSpeedX / 2;
+			this.ballSpeedX = 7;
+			this.ballSpeedY = this.ballSpeedX / 2;
 		},
 
 		buildGame: function() {
