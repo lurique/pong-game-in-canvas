@@ -47,31 +47,21 @@ var App = App || {};
 
 				window.addEventListener('keydown', function(key) {
 					switch(key.keyCode) {
-						case 87:
+						case 83:
 							self.player1Y += 35;
 							break;
 
-						case 83:
+						case 87:
 							self.player1Y -= 35;
 							break;
 					}
 				});
 
-				self.Modules.drawGamemode();
-
-				if ( self.GAMEMODE == true ) {
-					setInterval(function (){
-						self.Modules.drawArena();
-						self.Events.moveBall();
-
-						if ( self.VERSUS == false ) {
-							self.Events.versusCPU();
-						} else {
-							self.Events.versusHuman();
-						}
-
-					}, 1000 / self.FRAMES);
-				}
+				setInterval(function (){
+					self.Modules.drawArena();
+					self.Events.moveBall();
+					self.Events.versusCPU();
+				}, 1000 / self.FRAMES);
 
 			}
 		},
@@ -94,7 +84,7 @@ var App = App || {};
 				this.textRect('versus CPU', self.canvas.width / 2 + 196, self.canvas.height / 2 + 3, 'white');
 
 				// Draw title
-				this.textRect('Choose your game', self.canvas.width / 2 - 40, 30, 'white');
+				this.textRect('Choose your game', self.canvas.width / 2 - 40, 30, 'white');			
 			},
 
 			drawArena: function() {
@@ -172,18 +162,30 @@ var App = App || {};
 				self.ballX = self.ballX + self.ballSpeedX;
 				self.ballY = self.ballY + self.ballSpeedY;
 
-				if ( self.ballX > self.canvas.width ) {
-					self.player1Score++;
+				if ( self.ballX < 0 ) {
+					if ( self.ballY > self.player1Y && self.ballY < self.player1Y + self.PADDLE_HEIGHT ) {
+						var deltaY = self.ballY -(self.player1Y + self.PADDLE_HEIGHT / 2);
+						
+						self.ballSpeedX = -self.ballSpeedX;
+						self.ballSpeedY = deltaY * 0.35;
+					} else {
+						self.player2Score++;
 
-					this.resetBall();
+						this.resetBall();
+					}
 				}
 
-				if ( self.ballX < 0 ) {
+				if ( self.ballX > self.canvas.width ) {
+					if ( self.ballY > self.player2Y && self.ballY < self.player2Y + self.PADDLE_HEIGHT ) {
+						var deltaY = self.ballY -(self.player2Y + self.PADDLE_HEIGHT / 2);
+						
+						self.ballSpeedX = -self.ballSpeedX;
+						self.ballSpeedY = deltaY * 0.35;
+					} else {
+						self.player1Score++;
 
-					self.player2Score++;
-
-					this.resetBall();
-
+						this.resetBall();
+					}
 				}
 			},
 
