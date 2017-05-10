@@ -163,12 +163,13 @@ var App = App || {};
 				self.ballY = self.ballY + self.ballSpeedY;
 
 				if ( self.ballY <= 0 ) {
-					self.ballSpeedY = self.ballSpeedX;
+					self.ballSpeedY = Math.abs(self.ballSpeedX);
 				}
 
 				if ( self.ballY >= self.canvas.height ) {
-					self.ballSpeedY = -self.ballSpeedX;
+					self.ballSpeedY = Math.abs(self.ballSpeedX) * -1;
 				}
+
 
 				if ( self.ballX < 0 ) {
 					if ( self.ballY > self.player1Y && self.ballY < self.player1Y + self.PADDLE_HEIGHT ) {
