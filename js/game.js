@@ -59,7 +59,7 @@ var App = App || {};
 
 				setInterval(function (){
 					self.Modules.drawArena();
-					self.Events.moveBall();
+					self.Events.moveElements();
 					self.Events.versusCPU();
 				}, 1000 / self.FRAMES);
 
@@ -156,7 +156,7 @@ var App = App || {};
 				// In the future - Without keypress ghosting
 			},
 
-			moveBall: function() {
+			moveElements: function() {
 				var self = App.Pong;
 
 				self.ballX = self.ballX + self.ballSpeedX;
