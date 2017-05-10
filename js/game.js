@@ -162,6 +162,14 @@ var App = App || {};
 				self.ballX = self.ballX + self.ballSpeedX;
 				self.ballY = self.ballY + self.ballSpeedY;
 
+				if ( self.ballY <= 0 ) {
+					self.ballSpeedY = self.ballSpeedX;
+				}
+
+				if ( self.ballY >= self.canvas.height ) {
+					self.ballSpeedY = -self.ballSpeedX;
+				}
+
 				if ( self.ballX < 0 ) {
 					if ( self.ballY > self.player1Y && self.ballY < self.player1Y + self.PADDLE_HEIGHT ) {
 						var deltaY = self.ballY -(self.player1Y + self.PADDLE_HEIGHT / 2);
