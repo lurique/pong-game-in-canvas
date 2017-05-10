@@ -3,7 +3,7 @@
 ![#](https://img.shields.io/badge/build-passing-brightgreen.svg?style=flat)
 ![#](https://img.shields.io/badge/coverage-90%25-green.svg?style=flat)
 
-A simple Pong game made with Canvas.
+A simple Pong game in Canvas.
 
 ## How to play ##
 Player 1:
